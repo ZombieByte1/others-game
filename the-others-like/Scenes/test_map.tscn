@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7bwigv2ypmbv"]
+
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_nwvjy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2opq"]
+albedo_color = Color(0.202866, 0.294506, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w7pta"]
+material = SubResource("StandardMaterial3D_i2opq")
+size = Vector3(30, 1, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6or74"]
+data = PackedVector3Array(-15, 0.5, 15, 15, 0.5, 15, -15, -0.5, 15, 15, 0.5, 15, 15, -0.5, 15, -15, -0.5, 15, 15, 0.5, -15, -15, 0.5, -15, 15, -0.5, -15, -15, 0.5, -15, -15, -0.5, -15, 15, -0.5, -15, 15, 0.5, 15, 15, 0.5, -15, 15, -0.5, 15, 15, 0.5, -15, 15, -0.5, -15, 15, -0.5, 15, -15, 0.5, -15, -15, 0.5, 15, -15, -0.5, -15, -15, 0.5, 15, -15, -0.5, 15, -15, -0.5, -15, 15, 0.5, 15, -15, 0.5, 15, 15, 0.5, -15, -15, 0.5, 15, -15, 0.5, -15, 15, 0.5, -15, -15, -0.5, 15, 15, -0.5, 15, -15, -0.5, -15, 15, -0.5, 15, 15, -0.5, -15, -15, -0.5, -15)
+
+[sub_resource type="Environment" id="Environment_bj7gd"]
+background_energy_multiplier = 2.01
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 2.52
+
+[sub_resource type="BoxMesh" id="BoxMesh_kyb3b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4c833"]
+
+[node name="TestMap" type="Node3D"]
+
+[node name="TestFLoor" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_w7pta")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TestFLoor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestFLoor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_6or74")
+
+[node name="Character" parent="." instance=ExtResource("1_nwvjy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183172, 0.5, 6.16888)
+JUMP = "jump"
+LEFT = "left"
+RIGHT = "right"
+FORWARD = "forward"
+BACKWARD = "back"
+PAUSE = "pause"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bj7gd")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36116, -0.115867)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_kyb3b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_4c833")
